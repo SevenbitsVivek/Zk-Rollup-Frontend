@@ -1,13 +1,21 @@
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import StartPolygonTransactonIndexer from './PolygonTransactions';
+import StartEthereumTransactonIndexer from './EthereumTransactions';
+import { BrowserRouter } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/StartPolygonTransactonIndexer" element={<StartPolygonTransactonIndexer />} />
+        <Route path="/StartEthereumTransactonIndexer" element={<StartEthereumTransactonIndexer />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
