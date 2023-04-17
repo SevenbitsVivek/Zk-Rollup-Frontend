@@ -2,6 +2,7 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
+import WelcomePage from './WelcomePage';
 import StartPolygonTransactonIndexer from './PolygonTransactionsList';
 import StartEthereumTransactonIndexer from './EthereumTransactionsList';
 import { BrowserRouter } from "react-router-dom"
@@ -12,6 +13,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<WelcomePage />} />
         <Route path="/PolygonTransactionsList" element={<StartPolygonTransactonIndexer />} />
         <Route path="/EthereumTransactionsList" element={<StartEthereumTransactonIndexer />} />
       </Routes>
