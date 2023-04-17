@@ -6,12 +6,12 @@ export default function StartPolygonTransactonIndexer() {
   const [transactionIndexer, setTransactionIndexer] = useState([]);
   const [decodedValue, setDecodedValue] = useState([]);
   useEffect(() => {
-    fetch(`https://api-testnet.polygonscan.com/api?module=account&action=txlist&address=${'0x87c60581A565FC1D25Ffd126FFd14965d36161a2'}&startblock=${34205248}&endblock=${99999999}&sort=asc&apikey=${'61NXGEUMZJGEXU5ZTZQN8ZGHRBC8PAVSFN'}`)
+    fetch(`https://api-testnet.polygonscan.com/api?module=account&action=txlist&address=${'0x87c60581A565FC1D25Ffd126FFd14965d36161a2'}&startblock=${34205366}&endblock=${99999999}&sort=asc&apikey=${'61NXGEUMZJGEXU5ZTZQN8ZGHRBC8PAVSFN'}`)
       .then((response) => response.json())
       .then((transactionIndexer) => {
         setTransactionIndexer(transactionIndexer.result);
         let resultArray = []
-        for (var i = 1; i < transactionIndexer.result.length; i++) {
+        for (var i = 0; i < transactionIndexer.result.length; i++) {
           const data = transactionIndexer.result[i].input
           const decoder = new InputDataDecoder(polygonAbi.abi);
           const result = decoder.decodeData(data);
@@ -23,6 +23,9 @@ export default function StartPolygonTransactonIndexer() {
 
   return (
     <div>
+      <div style={{ display: 'flex', justifyContent: 'center', height: '13vh' }}>
+        <h1>Polygon Testnet Transaction's List</h1>
+      </div>
       {transactionIndexer.map((transaction, index) => {
         return (
           <div key={index}>
