@@ -31,12 +31,12 @@ export default function StartPolygonTransactonIndexer() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'center', height: '13vh' }}>
+      <div style={{ backgroundColor: 'red', display: 'flex', justifyContent: 'center', height: '13vh' }}>
         <h1>Polygon Testnet Transaction's List</h1>
       </div>
       {transactionIndexer.map((transaction, index) => {
         return (
-          <div key={index}>
+          <div key={index} style={{backgroundColor: 'white'}}>
             TransactionHash:<a href={"https://mumbai.polygonscan.com/tx/" + transaction.hash} target="_blank" rel="noreferrer">{transaction.hash}</a> <br />
             {"DecodedValue:" + decodedValue[index]} <br />
             {"BlockNumber:" + blockNumber[index]} <br /> <br />
