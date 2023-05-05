@@ -6,7 +6,7 @@ export default function StartPolygonTransactonIndexer() {
   const [transactionIndexer, setTransactionIndexer] = useState([]);
   const [decodedValue, setDecodedValue] = useState([]);
   const [blockNumber, setBlockNumber] = useState([]);
-  
+
   useEffect(() => {
     fetch(`https://api-goerli.etherscan.io/api?module=account&action=txlist&address=${'0xCF7810FF3339aBc68401233d37baef9674bBF84D'}&startblock=${8807071 + 1}&endblock=${99999999}&sort=asc&apikey=${'JB7KZVSGD7Z4AGJGEYITX4WY1W5V4I5D1K'}`)
       .then((response) => response.json())
@@ -36,7 +36,6 @@ export default function StartPolygonTransactonIndexer() {
       });
   }, []);
   
-
   return (
     <div>
       <div style={{ backgroundColor: 'red', display: 'flex', justifyContent: 'center', height: '13vh' }}>
