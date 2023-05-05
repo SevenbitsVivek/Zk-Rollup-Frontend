@@ -6,28 +6,34 @@ export default function StartPolygonTransactonIndexer() {
   const [transactionIndexer, setTransactionIndexer] = useState([]);
   const [decodedValue, setDecodedValue] = useState([]);
   const [blockNumber, setBlockNumber] = useState([]);
+  
   useEffect(() => {
     fetch(`https://api-testnet.polygonscan.com/api?module=account&action=txlist&address=${'0x87c60581A565FC1D25Ffd126FFd14965d36161a2'}&startblock=${34205248 + 1}&endblock=${99999999}&sort=asc&apikey=${'61NXGEUMZJGEXU5ZTZQN8ZGHRBC8PAVSFN'}`)
       .then((response) => response.json())
       .then((transactionIndexer) => {
-        setTransactionIndexer(transactionIndexer.result);
-        let decodedBase64Array = []
-        let blockNumberArray = []
-        for (var i = 0; i < transactionIndexer.result.length; i++) {
-          if (transactionIndexer.result[i].txreceipt_status === "1") {
-            const data = transactionIndexer.result[i].input
-            const decoder = new InputDataDecoder(polygonAbi.abi);
-            const result = decoder.decodeData(data);
-            if (result.method === "setBase64") {
-              decodedBase64Array.push(result.inputs[1])
-              blockNumberArray.push(result.inputs[0].toString())
-            }
-          }
-        }
+        const filteredTransactions = transactionIndexer.result.filter((transaction) => {
+          const data = transaction.input
+          const decoder = new InputDataDecoder(polygonAbi.abi);
+          const result = decoder.decodeData(data);
+          return result.method === "setBase64";
+        });
+        setTransactionIndexer(filteredTransactions);
+        let decodedBase64Array = filteredTransactions.map((transaction) => {
+          const data = transaction.input
+          const decoder = new InputDataDecoder(polygonAbi.abi);
+          const result = decoder.decodeData(data);
+          return result.inputs[1];
+        });
+        let blockNumberArray = filteredTransactions.map((transaction) => {
+          const data = transaction.input
+          const decoder = new InputDataDecoder(polygonAbi.abi);
+          const result = decoder.decodeData(data);
+          return result.inputs[0].toString();
+        });
         setDecodedValue(decodedBase64Array)
         setBlockNumber(blockNumberArray)
       });
-  }, []);
+  }, []);  
 
   return (
     <div>
@@ -36,7 +42,7 @@ export default function StartPolygonTransactonIndexer() {
       </div>
       {transactionIndexer.map((transaction, index) => {
         return (
-          <div key={index} style={{backgroundColor: 'white'}}>
+          <div key={index} style={{ backgroundColor: 'white' }}>
             TransactionHash:<a href={"https://mumbai.polygonscan.com/tx/" + transaction.hash} target="_blank" rel="noreferrer">{transaction.hash}</a> <br />
             {"DecodedValue:" + decodedValue[index]} <br />
             {"BlockNumber:" + blockNumber[index]} <br /> <br />
