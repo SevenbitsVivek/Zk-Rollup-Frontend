@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import polygonAbi from './abi/UpdateTransaction.json';
 import InputDataDecoder from 'ethereum-input-data-decoder';
 
-export default function StartPolygonTransactonIndexer() {
+export default function StartEthereumTransactonIndexer() {
   const [transactionIndexer, setTransactionIndexer] = useState([]);
   const [decodedValue, setDecodedValue] = useState([]);
   const [blockNumber, setBlockNumber] = useState([]);
