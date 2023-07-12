@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import polygonAbi from './abi/UpdateTransaction.json';
+import ethereumAbi from './abi/UpdateTransaction.json';
 import InputDataDecoder from 'ethereum-input-data-decoder';
 
 export default function StartEthereumTransactonIndexer() {
@@ -14,20 +14,20 @@ export default function StartEthereumTransactonIndexer() {
         console.log("transactionIndexer ===>", transactionIndexer)
         const filteredTransactions = transactionIndexer.result.filter((transaction) => {
           const data = transaction.input
-          const decoder = new InputDataDecoder(polygonAbi.abi);
+          const decoder = new InputDataDecoder(ethereumAbi.abi);
           const result = decoder.decodeData(data);
           return result.method === "setBase64";
         });
         setTransactionIndexer(filteredTransactions);
         let decodedBase64Array = filteredTransactions.map((transaction) => {
           const data = transaction.input
-          const decoder = new InputDataDecoder(polygonAbi.abi);
+          const decoder = new InputDataDecoder(ethereumAbi.abi);
           const result = decoder.decodeData(data);
           return result.inputs[1];
         });
         let blockNumberArray = filteredTransactions.map((transaction) => {
           const data = transaction.input
-          const decoder = new InputDataDecoder(polygonAbi.abi);
+          const decoder = new InputDataDecoder(ethereumAbi.abi);
           const result = decoder.decodeData(data);
           return result.inputs[0].toString();
         });
